@@ -15,15 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from ads.views import StatusView, AdsView, AdsEntityView, CategoriesView, \
-    CategoriesEntityView
+from ads.views import StatusView, AdsView, \
+    CategoriesView, CategoriesDetailView, AdsDetailView
+    # CategoriesEntityView, AdsEntityView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('status/', StatusView.as_view(), name='status_ok'),
     path('ad/', AdsView.as_view()),
-    path('ad/<int:pk>/', AdsEntityView.as_view()),
+    path('ad/<int:pk>/', AdsDetailView.as_view()),
     path('cat/', CategoriesView.as_view()),
-    path('cat/<int:pk>/', CategoriesEntityView.as_view()),
+    path('cat/<int:pk>/', CategoriesDetailView.as_view()),
 ]

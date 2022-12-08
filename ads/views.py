@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.generic import DetailView
+
 from ads.models import Ads, Categories
 
 
@@ -45,16 +47,31 @@ class AdsView(View):
             'address': ads_result.address,
             'is_published': ads_result.is_published,
         }
-        return JsonResponse(response, json_dumps_params={"ensure_ascii": False})
+        return JsonResponse(response,
+                            json_dumps_params={"ensure_ascii": False})
 
 
-class AdsEntityView(View):
-    def get(self, request, pk):
-        try:
-            ads_result = Ads.objects.get(id=pk)
-        except Ads.DoesNotExist:
-            return JsonResponse({'Error': "NotFound"}, status=404)
+# class AdsEntityView(View):
+#     def get(self, request, pk):
+#         try:
+#             ads_result = Ads.objects.get(id=pk)
+#         except Ads.DoesNotExist:
+#             return JsonResponse({'Error': "NotFound"}, status=404)
+#
+#         return JsonResponse({
+#             'id': ads_result.id,
+#             'name': ads_result.name,
+#             'author': ads_result.author,
+#             'price': ads_result.price,
+#             'description': ads_result.description,
+#             'address': ads_result.address,
+#             'is_published': ads_result.is_published,
+#         })
+class AdsDetailView(DetailView):
+    model = Ads
 
+    def get(self, request, *args, **kwargs):
+        ads_result = self.get_object()
         return JsonResponse({
             'id': ads_result.id,
             'name': ads_result.name,
@@ -88,17 +105,27 @@ class CategoriesView(View):
             'id': category.id,
             'name': category.name
         }
-        return JsonResponse(response, json_dumps_params={"ensure_ascii": False})
+        return JsonResponse(response,
+                            json_dumps_params={"ensure_ascii": False})
 
 
-class CategoriesEntityView(View):
-    def get(self, request, pk):
-        try:
-            category = Categories.objects.get(id=pk)
-        except Categories.DoesNotExist:
-            return JsonResponse({'Error': "NotFound"}, status=404)
+# class CategoriesEntityView(View):
+#     def get(self, request, pk):
+#         try:
+#             category = Categories.objects.get(id=pk)
+#         except Categories.DoesNotExist:
+#             return JsonResponse({'Error': "NotFound"}, status=404)
+#
+#         return JsonResponse({
+#             'id': category.id,
+#             'name': category.name,
+#         })
+class CategoriesDetailView(DetailView):
+    model = Categories
 
+    def get(self, request, *args, **kwargs):
+        category = self.get_object()
         return JsonResponse({
             'id': category.id,
-            'name': category.name,
+            'name': category.name
         })
