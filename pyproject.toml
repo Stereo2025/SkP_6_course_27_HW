@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "skp-6-course-27-hw"
+version = "0.1.0"
+description = ""
+authors = ["Stereo2025 <teneloks@gmail.com>"]
+readme = "README.md"
+packages = [{include = "skp_6_course_27_hw"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.1.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
