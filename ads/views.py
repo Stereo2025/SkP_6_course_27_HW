@@ -8,7 +8,6 @@ from django.views.generic import DetailView
 from ads.models import Ads, Categories
 
 
-# Create your views here.
 class StatusView(View):
     def get(self, request):
         if request.method == "GET":
